@@ -14,14 +14,14 @@ class Profile extends Component {
 
     return (
       <div className="profile">
-        {artist.images[0].url && <img
+        <img
           alt="profile"
           className="profile-img"
           src={artist.images[0].url}
-        />}
+        />
         <div className="profile-info">
           <div className="profile-name">{artist.name}</div>
-          {artist.followers.total && <div className="profile-followers">Followers: {artist.followers.total}</div>}
+          <div className="profile-followers">Followers: {artist.followers.total}</div>
           <div className="profile-genres">{
             artist.genres.map((genre, i) => {
               return(
