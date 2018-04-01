@@ -1,19 +1,21 @@
 import React, { Component } from 'react';
 import './App.css';
 import { FormGroup, FormControl, InputGroup, Glyphicon } from 'react-bootstrap';
+import Profile from './Profile';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      query: ''
+      query: '',
+      artist: null
     }
   }
 
   search() {
     console.log('this.state', this.state);
     const BASE_URL = 'https://api.spotify.com/v1/search?';
-    const FETCH_URL = BASE_URL + 'q=' + this.state.query + '&type=artist&limit=1';
+    const FETCH_URL = `${BASE_URL}q=${this.state.query}&type=artist&limit=1`;
     var accessToken = '';
     //var myHeaders = new Headers();
 
@@ -28,7 +30,10 @@ class App extends Component {
 
     fetch(FETCH_URL, myOptions )
       .then(response => response.json())
-      .then(json => console.log(json))
+      .then(json => {
+        const artist = json.artists.items[0];
+        this.setState({artist});
+      })
   }
 
   render() {
@@ -55,10 +60,9 @@ class App extends Component {
             </InputGroup.Addon>
           </InputGroup>
         </FormGroup>
-        <div className="Profile">
-          <div>Artist Picture</div>
-          <div>Artist Name</div>
-        </div>
+        <Profile
+          artist={this.state.artist}
+          />
         <div className="Gallery">
           Gallery
         </div>
